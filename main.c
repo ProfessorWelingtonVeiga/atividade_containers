@@ -29,8 +29,46 @@ Navio *criar_navio(Navio *lista) {
     return adicionar_navio(lista, navio);
 }
 
-void imprimir_navios(Navio *lista) {
-    return imprimir(lista);
+
+Navio *criar_container(Navio *lista) {
+
+    Navio *navio = NULL;
+    Container *container = NULL;
+    int codigo;
+
+    // 1 - Precisamos saber em qual Navio adicionaremos o container.
+    printf( "Digite o código do navio onde deve ser inserido o container: ");
+    scanf("%d", &codigo);
+
+    // 2 - Vamos encontrar o navio onde vamos inserir o container.
+    navio = encontrar_navio(lista, codigo);
+
+    if (navio != NULL) {
+        // 3 - Criando espaço para o novo Container.
+        container = (Container*) malloc(sizeof(Container));
+
+        // 4 - Lendo as informações do conteiner do usuário.
+        printf( "Número              : ");
+        scanf("%d", &container->numero);
+
+        getchar();
+        printf( "Tipo  (A/E/Q)       : ");
+        scanf("%c", &container->tipo);
+
+        printf( "Peso                : ");
+        scanf("%f", &container->peso);
+
+        printf( "Valor               : ");
+        scanf("%f", &container->valor);
+
+        // 5 - Adicionar o container no navio
+        adicionar_container(navio, container);
+
+    } else {
+        printf( "Nenhum navio com o código %d foi encontrado, a operação foi cancelada.\n", codigo);
+    }
+
+    return lista;
 }
 
 
@@ -48,16 +86,11 @@ int main() {
     while (opcao != 0) {
 
         /* 4 - Imprima o menu */
-        printf(         "███╗   ███╗███████╗███╗   ██╗██╗   ██╗\n"
-                        "████╗ ████║██╔════╝████╗  ██║██║   ██║\n"
-                        "██╔████╔██║█████╗  ██╔██╗ ██║██║   ██║\n"
-                        "██║╚██╔╝██║██╔══╝  ██║╚██╗██║██║   ██║\n"
-                        "██║ ╚═╝ ██║███████╗██║ ╚████║╚██████╔╝\n"
-                        "╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝ ╚═════╝ \n"
+        printf(         "MENU\n"
                         "------------------------------------------\n"
                         "Selecione a opção desejada:\n"
                         "------------------------------------------\n"
-                        "(1) Add Navio (2) Imprimir Navios (0) Sair\n");
+                        "(1) Add Navio (2) Imprimir Navios (3) Adicionar Container (4) Imprimir containers (0) Sair\n");
 
         /* 5 - Leia a opção selecionada pelo usuário*/
         scanf("%d", &opcao);
@@ -70,7 +103,15 @@ int main() {
                 break;
 
             case 2:
-                imprimir_navios(lista_navios);
+                imprimir(lista_navios);
+                break;
+
+            case 3:
+                lista_navios = criar_container(lista_navios);
+                break;
+
+            case 4:
+                imprimir_containers(lista_navios);
                 break;
 
             case 0:
@@ -82,11 +123,11 @@ int main() {
         }
 
         /* 7 - Aguardando o usuário digitarantes do programa continuar, para que ele tenha tempo de ler as saídas
-         * em seguida lipme a tela. */
+         * em seguida limpe a tela. */
         printf( "\nPrecione um TECLA para continuar...\n");
         clear();
         getchar();
-        system("clear");
+        system("cls");
     }
 
 
