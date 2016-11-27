@@ -24,6 +24,8 @@ typedef struct snavio {
     char nome[101];
     char nacionalidade[4]; // BRA, USA...
     float cumprimento;
+    float pesoCargaTotal; // Calculado
+    float valorCargaTotal; // Calculado
     struct scontainer *containers;
     struct snavio *prox;
 } Navio;
@@ -55,5 +57,16 @@ void imprimir(Navio *lista_navios);
  * Imprime todos os containers.
  */
 void imprimir_containers(Navio *lista_navios);
+
+/*
+ *  Imprime apenas os navios mais pesados que certo peso.
+ */
+
+void imprimir_mais_pesados_que(Navio *lista_navios, float peso);
+
+/*
+ *  Imprime apenas os navios mais valiosos que certo valor.
+ */
+void imprimir_mais_valiosos_que(Navio *lista_navios, float valor);
 
 #endif //TESTE_PONTO_H

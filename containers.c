@@ -23,6 +23,8 @@ Navio* adicionar_navio(Navio *lista_navios, Navio *navio) {
     if (navio != NULL) {
         navio->prox = NULL;
         navio->containers = NULL;
+        navio->pesoCargaTotal = 0;
+        navio->valorCargaTotal= 0;
     }
 
     return lista_navios;
@@ -65,6 +67,10 @@ void adicionar_container(Navio *navio, Container *container) {
             // 4 - E apontar para NULL, para manter a lista íntegra.
             container->prox = NULL;
         }
+
+        // 5 Acumulando valores calculado
+        navio->pesoCargaTotal += container->peso;
+        navio->valorCargaTotal += container->valor;
     }
 
 }
@@ -79,10 +85,12 @@ void imprimir(Navio *lista_navios) {
     } else {
         // 3 - Para cada elemento da lista, vamos imprimir seu conteudo.
         while (aux != NULL) {
-            printf("Navio #%d | Nacionalidade %s | Tamanaho %.2fm | Nome: %s\n",
+            printf("Navio #%d | Nacionalidade %s | Tamanaho %.2fm | Carga Total: %.2f| Valor Total: %.2f | Nome: %s\n",
                    aux->codigo,
                    aux->nacionalidade,
                    aux->cumprimento,
+                   aux->pesoCargaTotal,
+                    aux->valorCargaTotal,
                    aux->nome);
 
             aux = aux->prox;
@@ -110,4 +118,68 @@ void imprimir_containers(Navio *lista_navios) {
         }
         aux = aux->prox;
     }
+}
+
+/*
+ *  Imprime apenas os navios mais pesados que certo peso.
+ */
+
+void imprimir_mais_pesados_que(Navio *lista_navios, float peso) {
+    // 1 - Ponteiro para apontar para o começo da lista
+    Navio *aux = lista_navios;
+    int imprimiu = 0;
+
+    // 2 - Para cada elemento da lista,
+    while (aux != NULL) {
+        // 3 - Se estiver acima do valor desejado, imprima.
+        if (aux->pesoCargaTotal > peso) {
+            printf("Navio #%d | Nacionalidade %s | Tamanaho %.2fm | Carga Total: %.2f| Valor Total: %.2f | Nome: %s\n",
+                   aux->codigo,
+                   aux->nacionalidade,
+                   aux->cumprimento,
+                   aux->pesoCargaTotal,
+                   aux->valorCargaTotal,
+                   aux->nome);
+
+            imprimiu++;
+        }
+        aux = aux->prox;
+    }
+
+    // 4 - Se nada for impresso, avise ao usuário:
+    if (imprimiu == 0) {
+        printf("Nenhum navio encontrado.");
+    }
+}
+
+/*
+ *  Imprime apenas os navios mais valiosos que certo valor.
+ */
+void imprimir_mais_valiosos_que(Navio *lista_navios, float valor) {
+    // 1 - Ponteiro para apontar para o começo da lista
+    Navio *aux = lista_navios;
+    int imprimiu = 0;
+
+    // 2 - Para cada elemento da lista,
+    while (aux != NULL) {
+        // 3 - Se estiver acima do valor desejado, imprima.
+        if (aux->valorCargaTotal > valor) {
+            printf("Navio #%d | Nacionalidade %s | Tamanaho %.2fm | Carga Total: %.2f| Valor Total: %.2f | Nome: %s\n",
+                   aux->codigo,
+                   aux->nacionalidade,
+                   aux->cumprimento,
+                   aux->pesoCargaTotal,
+                   aux->valorCargaTotal,
+                   aux->nome);
+
+            imprimiu++;
+        }
+        aux = aux->prox;
+    }
+
+    // 4 - Se nada for impresso, avise ao usuário:
+    if (imprimiu == 0) {
+        printf("Nenhum navio encontrado.");
+    }
+
 }

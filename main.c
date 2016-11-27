@@ -6,6 +6,7 @@
 #include "containers.h"
 #include "entrada_saida.h"
 
+
 Navio *criar_navio(Navio *lista) {
     // 1 - Criando espaço para o novo Navio.
     Navio *navio  = (Navio*) malloc(sizeof(Navio));
@@ -90,7 +91,7 @@ int main() {
                         "------------------------------------------\n"
                         "Selecione a opção desejada:\n"
                         "------------------------------------------\n"
-                        "(1) Add Navio (2) Imprimir Navios (3) Adicionar Container (4) Imprimir containers (0) Sair\n");
+                        "(1) Add Navio (2) Imprimir Navios (3) Adicionar Container (4) Imprimir containers (5) Imprimir navios mais pesados que 1 tonelada (6) imprimir navios mais valiosos que 500 milhões (0) Sair\n");
 
         /* 5 - Leia a opção selecionada pelo usuário*/
         scanf("%d", &opcao);
@@ -114,6 +115,14 @@ int main() {
                 imprimir_containers(lista_navios);
                 break;
 
+            case 5:
+                imprimir_mais_pesados_que(lista_navios, 1000000);
+                break;
+
+            case 6:
+                imprimir_mais_valiosos_que(lista_navios, 500000000);
+                break;
+
             case 0:
                 printf( "A opção sair foi selecionada, o programa será finalizado.\n");
                 break;
@@ -134,5 +143,6 @@ int main() {
     return EXIT_SUCCESS;
 
 }
+
 
 
